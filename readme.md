@@ -140,3 +140,55 @@ converting in the form of middleware
 # Phase 2 (Part - A)
 
 
+* creating "Reviews" Model 
+    - comment  (string)
+    - rating ( 1 to 5)  (number)
+    - createdAt  (data,time)
+
+
+* Create Reviews
+1. Setting up the reviews Form
+2. Submitting the Form => adding review
+
+    POST  /listings/:id/reviews
+
+    each reviews should be part of listings 
+
+
+* Validation for reviews 
+anyone can come and submit empty reviews which we offc dont want so we will come up with 
+"VALIDATION FOR REVIEWS"
+
+1. client side (form) => we will fill required fields etc
+2. sever side (joi) =>  
+    joi schema
+    joi schmea validate function
+    function was passed as middleware 
+
+
+* Render reviews (to show reviews )  on show listing page
+
+
+* Adding Style to review => in card form
+
+
+* Deleting Reviews
+    => delete button => /listing/:id/reviews/:reviewID 
+    we have to delete review from "review collection" and then from "listing. review" (array) also 
+    
+    for deleting the review from listing.reviews (array) we will use "PULL" operator of mongo
+
+    $pull: the $pull operatot removes from an existing array all instances of a value or values that match a specified condition
+
+* Deleting Listing (delete Middleware for Reviews)
+    what will happend to reviews if we delete lisitngs 
+
+# Phase 2 (Part - B)
+
+* Express Router
+
+
+
+
+
+
