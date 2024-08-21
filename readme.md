@@ -189,6 +189,26 @@ anyone can come and submit empty reviews which we offc dont want so we will come
 
 
 
+* Restructuring Listings  
+
+=> through express Router 
+
+
+
+* Restructuring Reviews
+if we simply restructure the reviews we will get an error after restructure ("cannot read properties of null: reading reviews")
+
+app.use("/listings/:id/reviews", reviews ) which is called "parent route"   the id perimeter remains in the app.js file only it doesn't get forwarded to the review.js
+
+solution =>
+router = express.Router({mergeParams: true}) 
+to merge the parent route to child route basically to send id to review.js
+*** read more on express router  *** 
+express.Router([options])
+
+
+
+
 
 
 
