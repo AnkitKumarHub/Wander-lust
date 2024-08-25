@@ -29,7 +29,12 @@
   <body>
     <!-- This is the part of common code which should occur on every page or template we dnt have to write again and again  -->
     <%- include("../includes/navbar.ejs") %>
-    <div class="container"><%- body %></div>
+
+    <div class="container">
+      <%- include("../includes/flash.ejs") %>
+      <%- body %>
+    </div>
+    
     <%- include("../includes/footer.ejs") %>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

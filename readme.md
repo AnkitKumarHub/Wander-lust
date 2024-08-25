@@ -208,6 +208,17 @@ express.Router([options])
 
 
 
+# Phase 2 (Part - C)
+
+* implement cookies in sessionoption 
+
+setting the session cookie, expDate of cookies
+
+* Using Flash
+
+
+
+
 
 
 
