@@ -218,6 +218,36 @@ setting the session cookie, expDate of cookies
 
 
 
+# Phase 2 (Part - D)
+
+
+* User Model
+
+Defining the user model to store the username, password, email
+
+
+
+
+* Demo User
+created a fake user with username and email and then using static method register we saved our fake user in the database with email username password(in the hashing form) and salt string 
+
+
+* SignUp user
+GET     /signup => signup form => req will go to the post /signup 
+
+
+POST    /signup will register the user in DB
+
+
+* Login User
+GET     /login  => login form => submit on post /login
+POST    /login
+
+
+
+
+
+
 
 
 
