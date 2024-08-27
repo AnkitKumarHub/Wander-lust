@@ -244,7 +244,56 @@ GET     /login  => login form => submit on post /login
 POST    /login
 
 
+# Phase 2 (Part - E)
 
+for now any random can come and create the listings so we are developing the functionality that if anyone creates the listing he/she must be logged in the portal
+
+How to check if user is logged in??
+
+req.isAuthenticated()
+
+created a isLoggedIn middleware to verify on crud operation whether a user is logged in or not 
+if logged in then only allowed the operation 
+
+* Logout User
+
+GET   /logout
+
+* to create sign up, login, logout functionality 
+in req.user => undefined => (Not Logged in) => signUp, login
+            => object => (logged in) => logout
+
+* Login after SignUp
+after signup we should automatically get logged in 
+so we are going to use req.login() method of passport
+
+* post-login Page
+for now when we are going to create the new listing we are getting for login but after the login process is completed we are gettng redirected to the /listings
+
+so for this inconvenience of the user 
+console.log(req)
+
+* Listing Owner
+
+functionality => is Authorized()
+listing can be editted or deleted by the owner itself only no other person is authorized to edit or delete other listings 
+same goes for review also  
+
+
+
+* Starting with authorization
+we will give edit and delete buttons to thier respective owner only 
+
+so we will check the curr user logged in id with their respective listing owner's id and if they match then only we will provide the options 
+
+* Authorization for listing 
+protecting the routes from the postman hopscotch requests
+
+
+* Setting Authorization (for reviews)
+1. review => author/owner/created by
+
+2. if anyone review any listing then the user must be logged in the platform 
 
 
 
