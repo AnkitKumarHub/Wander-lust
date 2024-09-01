@@ -296,6 +296,59 @@ protecting the routes from the postman hopscotch requests
 2. if anyone review any listing then the user must be logged in the platform 
 
 
+# Phase 3 (Part - A) 
+
+MVC: Model, View, Controller structure
+(Implement Design Pattern for listings)
+
+* MVC for listings in the contoller (listings.js)
+
+
+* MVC for Reviews and User
+ 
+
+* Router Route 
+
+
+* image upload
+problems:
+1. the form can't send the file to the backend at this time 
+raw data is being sent only for now
+2.  size limit in mongo for bson data
+
+
+solution:
+1. to make our form capable of sending files
+2. we cant save files in mongo so we will use 3rd party service cloud server => which will save files => which will give URL/link 
+3. save this link in mongo
+
+
+* Manipulating Form
+for now we are sending only urlencoded form
+enctype = "multipart/form-data"
+
+to parse data into file type 
+Multer package is a node.js middleware for handling multipart/form-data, which is primarily used for uploading files.
+
+for now we are storing into the local storage
+
+* Cloud Setup
+cloudinary & .env file
+.env => to store our environment variables/credentials with format
+KEY=value
+
+* store files into the cloud
+Multer Store Cloudinary (install package cloudinary, multer-storage-cloudinary)
+
+form => backend(parse) => cloud(store) => URL/link(req.file.path) => to save link in mongodb 
+
+* save link in Mongo
+
+
+
+
+
+
 
 
 
