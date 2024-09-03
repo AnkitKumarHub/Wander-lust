@@ -345,6 +345,27 @@ form => backend(parse) => cloud(store) => URL/link(req.file.path) => to save lin
 * save link in Mongo
 
 
+# Phase 3 (Part - B)
+
+* edit listing image
+
+
+* Image preview for edit page
+
+
+* getting started with Maps
+mapbox api
+
+
+
+
+
+
+# Phase 3 (Part - C)
+
+* Fixing Home Page
+
+
 
 
 

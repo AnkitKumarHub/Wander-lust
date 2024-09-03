@@ -52,9 +52,9 @@ const sessionOptions = {
   }
 };
 
-app.get("/", (req, res) => {
-  res.send("Hi I am the root");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hi I am the root");
+// });
 
 
 //creating session ID and storing the cookies with expDate info in browser

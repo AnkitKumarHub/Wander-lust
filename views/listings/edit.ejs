@@ -3,7 +3,13 @@
   <div class="row mt-3">
     <div class="col-8 offset-2">
       <h2>Edit Listing</h2>
-      <form action="/listings/<%=listing._id%>?_method=PUT" method="post" novalidate class="needs-validation">
+      <form
+        action="/listings/<%=listing._id%>?_method=PUT"
+        method="post"
+        novalidate
+        class="needs-validation"
+        enctype="multipart/form-data"
+      >
         <div class="mb-3">
           <label for="title" class="form-label">Title</label>
           <input
@@ -14,34 +20,34 @@
             class="form-control"
             required
           />
-          <div class="valid-feedback">
-            Looks good!
-          </div>
-          <div class="invalid-feedback">
-            enter a valid title
-          </div>
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">enter a valid title</div>
         </div>
         <div class="mb-3">
           <label for="description" class="form-label">Description</label>
-          <textarea name="listing[description]" class="form-control" required style="overflow: hidden;  " >
-<%=listing.description %> </textarea>
-<div class="invalid-feedback">
-  enter a valid description
-</div>
+          <textarea
+            name="listing[description]"
+            class="form-control"
+            required
+            style="overflow: hidden"
+          >
+<%=listing.description %> </textarea
+          >
+          <div class="invalid-feedback">enter a valid description</div>
         </div>
 
         <div class="mb-3">
-          <label for="image" class="form-label">Image LInk</label>
+          <p><b>Original Image</b></p>
+          <img src="<%= originalImageUrl %>" alt="">
+        </div>
+
+        <div class="mb-3">
+          <label for="image" class="form-label">upload New Image</label>
           <input
             name="listing[image]"
-            value="<%= listing.image %>"
-            type="text"
+            type="file"
             class="form-control"
-            required
           />
-          <div class="invalid-feedback">
-            enter a valid image link
-          </div>
         </div>
         <div class="row">
           <div class="col-md-4">
@@ -53,9 +59,7 @@
               class="form-control"
               required
             />
-            <div class="invalid-feedback">
-              enter a valid price
-            </div>
+            <div class="invalid-feedback">enter a valid price</div>
           </div>
 
           <div class="col-md-8">
@@ -67,9 +71,7 @@
               class="form-control"
               required
             />
-            <div class="invalid-feedback">
-              enter a valid country
-            </div>
+            <div class="invalid-feedback">enter a valid country</div>
           </div>
         </div>
 
@@ -82,9 +84,7 @@
             class="form-control"
             required
           />
-          <div class="invalid-feedback">
-            enter a valid location
-          </div>
+          <div class="invalid-feedback">enter a valid location</div>
         </div>
 
         <button class="btn btn-dark edit-btn mt-3">Edit</button>
