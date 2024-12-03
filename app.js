@@ -14,11 +14,13 @@ const flash = require("connect-flash")
 const passport = require("passport")
 const LocalStrategy = require("passport-local")
 const User = require("./models/user.js")
+const cors = require('cors');
 
 
 const listingRouter = require("./routes/listing.js")
 const reviewRouter = require("./routes/review.js")
-const userRouter = require("./routes/user.js")
+const userRouter = require("./routes/user.js");
+const paymentRoutes = require('./routes/paymentRoutes');
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
@@ -40,6 +42,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.json());
 
 const sessionOptions = {
   secret: "mysupersecretstring",
@@ -52,15 +55,11 @@ const sessionOptions = {
   }
 };
 
-// app.get("/", (req, res) => {
-//   res.send("Hi I am the root");
-// });
-
 
 //creating session ID and storing the cookies with expDate info in browser
 app.use(session(sessionOptions));
 app.use(flash())
-
+app.use(cors())
 app.use(passport.initialize()); //middleware that initializes the passport
 app.use(passport.session())  //Middleware that will restore login state from a session.
 
@@ -102,22 +101,13 @@ app.use("/listings" , listingRouter)
 //using review routes
 app.use("/listings/:id/reviews", reviewRouter )
 
+
+app.use("/api", paymentRoutes);  
+
+
 //using user routes
 app.use("/", userRouter)
 
-// app.get("/testlisting", async (req,res)=>{
-//     let sampleListing = new Listing({
-//         title: "My New Villa",
-//         description: "By the beach",
-//         price: 1200,
-//         loaction: "Calangute, Goa",
-//         country: "India"
-//     });
-
-//     await sampleListing.save();
-//     console.log("sample was saved");
-//     res.send("Successful testing");
-// })
 
 app.all("*", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found!!"));
@@ -126,8 +116,6 @@ app.all("*", (req, res, next) => {
 app.use((err, req, res, next) => {
   let { statusCode = 500, message = "Something went wrong!" } = err;
   res.status(statusCode).render("error.ejs", { message });
-  //   res.status(statusCode).send(message);
-  //   res.send("something went worng !!");
 });
 
 app.listen(8080, () => {

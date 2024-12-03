@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const { sendWelcomeEmail } = require('../emailService');
 
 module.exports.renderSignupForm = (req, res) => {
   res.render("users/signup.ejs");
@@ -8,8 +9,15 @@ module.exports.signup = async (req, res) => {
   try {
     let { username, email, password } = req.body;
     const newUser = new User({ email, username });
+
+    // Register the new user with the provided password
     const registeredUser = await User.register(newUser, password);
     console.log(registeredUser);
+
+    // Send welcome email after registration is successful
+    await sendWelcomeEmail(email, username);
+    
+    // Log the user in automatically and redirect
     req.login(registeredUser, (err) => {
       if (err) {
         return next(err);

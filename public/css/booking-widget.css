@@ -1,0 +1,104 @@
+/* body {
+  font-family: Arial, sans-serif;
+  background-color: #f7f7f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+} */
+
+.booking-widget {
+  background-color: #fff;
+  width: 100px;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  color: #333;
+}
+
+.price-per-night {
+  font-size: 1.5rem;
+  color: #ff5a5f;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.date-section,
+.guests-section,
+.breakdown,
+.total-section {
+  margin-bottom: 15px;
+}
+
+.date-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.date-input {
+  width: 48%;
+}
+
+.date-input label,
+.guests-section label {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.date-input input,
+.guests-section select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 0.95rem;
+  margin-top: 5px;
+}
+
+#reserve-btn {
+  background-image: linear-gradient(45deg, #ff5a5f, #d40047);
+  color: white;
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 15px;
+}
+
+#reserve-btn:hover {
+  background-image: linear-gradient(45deg, #d40047, #ff5a5f);
+}
+
+.disclaimer {
+  font-size: 0.85rem;
+  color: #888;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.breakdown,
+.total-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.price-details,
+.total-section p {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.total-price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+hr {
+  border: 0.5px solid #ddd;
+  margin: 10px 0;
+}

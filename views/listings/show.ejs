@@ -1,153 +1,334 @@
-<% layout("/layouts/boilerplate.ejs") %>
-<body>
-  <div class="row mt-3">
-    <div class="col-8 offset-3">
-      <h2><%= listing.title %></h2>
-      <br />
-    </div>
-    <div class="card col-6 offset-3 show-card listing-card">
+<% layout("/layouts/boilerplate.ejs") %> 
+<script>
+  const mapToken = "<%= process.env.MAP_TOKEN%>";
+  const listing = <%- JSON.stringify(listing) %>;
+
+</script>
+<div class="row mt-3 show-container">
+  <div class="col-sm-8 offset-sm-2 tittle">
+    <h3><%= listing.title %></h3>
+  </div>
+  <div class="card col-sm-8 offset-sm-2 show-card listing-card">
+    <div id="listing_image">
       <img
-        src="<%= listing.image.url %>"
-        class="card-img-top show-img"
-        alt="lisitng_image"
-      />
-      <div class="card-body">
-        <br />
-        <p class="card-text">
-          <i>Owned by&nbsp;&nbsp; <%= listing.owner.username %></i>
-        </p>
+      src="<%= listing.image.url %>"
+      class="show-img card-img-top "
+      alt="lisitng_image"
+    />
+    </div>
+    <div class="card-body">
+      <p class="card-text">
+        <strong>Hosted by :</strong>&nbsp;<i> @<%= listing.owner.username %></i>
+      </p>
 
-        <p class="card-text"><%= listing.description %></p>
-        <p class="card-text">
-          &#8377; <%= listing.price.toLocaleString("en-IN") %>
-        </p>
+      <p class="card-text">
+        <b>Description : </b>
+        <%= listing.description %>
+      </p>
+      <p class="card-text">
+        <b>Price : </b>
+        &#8377; <%= listing.price.toLocaleString("en-IN") %> / night
+      </p>
 
-        <p class="card-text"><%= listing.location %></p>
-        <p class="card-text"><%= listing.country %></p>
+      <p class="card-text">
+        <b>Location : </b>
+        <%= listing.location %>
+      </p>
+      <p class="card-text">
+        <b>Country : </b>
+        <%= listing.country %></p>
+    </div>
+  </div>
+<br>
+  <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
+  <div class="btns">
+    <a
+      href="/listings/<%=listing._id%>/edit" class="col-sm-1 offset-sm-2 ">
+      <button class="edit-btn">
+        <svg class="css-i6dzq1" stroke-linejoin="round" stroke-linecap="round" fill="none" stroke-width="2" stroke="#FFFFFF" height="24" width="24" viewBox="0 0 24 24">
+            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+        </svg>
+        Edit
+      </button>
+    </a>
+
+    <form action="/listings/<%=listing._id%>?_method=DELETE" method="post">
+      <div class="del offset-2 offset-sm-7 offset-md-5 offset-lg-4">
+        <button>Delete</button>     
       </div>
-    </div>
+    </form>
+  </div>
+  <% } %>
 
+  <!-- booking date -->
+  <div class="col-sm-8 offset-sm-2 mb-3">
     <br />
     <br />
+    <div class="booking-widget col-12 mb-3">
+      <h3 class="price-per-night">
+        &#8377;<span id="price-per-night"
+          ><%= listing.price.toLocaleString("en-IN") %></span
+        >
+        <span>/ night</span>
+      </h3>
 
-    <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
-    <div class="btns">
-      <a
-        href="/listings/<%=listing._id%>/edit"
-        class="btn btn-dark col-1 offset-3 edit-btn"
-        >Edit</a
-      >
-
-      <form action="/listings/<%=listing._id%>?_method=DELETE" method="post">
-        <Button class="btn btn-dark offset-5">Delete</Button>
-      </form>
-    </div>
-    <% } %>
-
-    <!--Reviews forms  -->
-    <div class="col-8 offset-3 mb-3">
-      <br />
-      <% if (currUser){ %>
-      <h4>Leave a Review</h4>
-      <form
-        action=" /listings/<%= listing.id %>/reviews"
-        method="post"
-        class="needs-validation"
-        novalidate
-      >
-        <div class="mb-3 mt-3">
-          <label for="rating" class="form-label">Rating </label>
-          <fieldset class="starability-slot">
-            <input
-              type="radio"
-              id="no-rate"
-              class="input-no-rate"
-              name="review[rating]"
-              value="1"
-              checked
-              aria-label="No rating."
-            />
-            <input
-              type="radio"
-              id="first-rate1"
-              name="review[rating]"
-              value="1"
-            />
-            <label for="first-rate1" title="Terrible">1 star</label>
-            <input
-              type="radio"
-              id="first-rate2"
-              name="review[rating]"
-              value="2"
-            />
-            <label for="first-rate2" title="Not good">2 stars</label>
-            <input
-              type="radio"
-              id="first-rate3"
-              name="review[rating]"
-              value="3"
-            />
-            <label for="first-rate3" title="Average">3 stars</label>
-            <input
-              type="radio"
-              id="first-rate4"
-              name="review[rating]"
-              value="4"
-            />
-            <label for="first-rate4" title="Very good">4 stars</label>
-            <input
-              type="radio"
-              id="first-rate5"
-              name="review[rating]"
-              value="5"
-            />
-            <label for="first-rate5" title="Amazing">5 stars</label>
-          </fieldset>
+      <div class="date-section">
+        <div class="date-input">
+          <label for="checkin">Check-in</label>
+          <input type="text" id="checkin" placeholder="Select date" />
         </div>
-
-        <div class="mb-3 mt-3">
-          <label for="comment" class="form-label">Comments</label>
-          <textarea
-            name="review[comment]"
-            id="comment"
-            cols="20"
-            rows="3"
-            class="form-control"
-            required
-          ></textarea>
-          <!-- client side validation for reviews (required fields, no empty comments) -->
-          <div class="invalid-feedback">enter valid feedback!</div>
+        <div class="date-input">
+          <label for="checkout">Checkout</label>
+          <input type="text" id="checkout" placeholder="Select date" />
         </div>
-        <br />
-        <button class="btn btn-outline-dark">Submit</button>
-      </form>
-      <% } %>
+      </div>
+
+      <div class="guests-section">
+        <label for="guest-count">Guests</label>
+        <select id="guest-count">
+          <option value="1">1 guest</option>
+          <option value="2">2 guests</option>
+          <option value="3">3 guests</option>
+          <option value="4">4 guests</option>
+        </select>
+      </div>
+
+      <button id="reserve-btn">Reserve</button>
+
+      <p class="disclaimer">You won't be charged yet</p>
+
+      <div class="breakdown">
+        <p>
+          <span class="price-details">
+            &#8377; <%= listing.price.toLocaleString("en-IN")%> x
+            <span id="num-nights">1</span> nights</span
+          ><span id="subtotal"
+            >&#8377;<%= listing.price.toLocaleString("en-IN")%></span
+          >
+        </p>
+        <p>
+          <span class="price-details">Service fee</span
+          ><span id="service-fee">&#8377;150</span>
+        </p>
+      </div>
 
       <hr />
-      <p><b>All Reviews</b></p>
-      <div class="row">
-        <% for (review of listing.reviews) {%>
-        <div class="card col-5 mb-3 ms-3 mt-2">
-          <div class="card-body">
-            <h5 class="card-title mt-2"><%=review.author.username%></h5>
-            <p
-              class="starability-result card-text"
-              data-rating="<%= review.rating%>"
-            ></p>
-            <p class="card-text"><%= review.comment %></p>
-          </div>
-          <form
-            action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
-            method="post"
-            class="mb-3 mt-2"
-          >
-            <% if(currUser && review.author._id.equals(currUser._id)) { %>
-            <button class="btn btn-sm btn-dark">Delete</button>
-            <% } %>
-          </form>
-        </div>
-        <% } %>
+
+      <div class="total-section">
+        <p>Total before taxes:</p>
+        <p class="total-price">&#8377;<span id="total-price"><%=listing.price.toLocaleString("en-IN") %></span></p>
       </div>
     </div>
   </div>
-</body>
+  <!-- show.ejs -->
+  <div id="booking-data" data-price-per-night="<%=listing.price.toLocaleString("en-IN") %>"></div>
+  <script src="/js/booking-widget.js"></script>
+
+  <!-- Reviews forms  -->
+  <div class="col-sm-8 offset-sm-2 mb-3">
+    <% if (currUser){ %>
+    <hr />
+    <h4>Leave a Review &nbsp;<i class="fa-solid fa-pen-to-square" style="color: #000000;"></i></h4>
+    <form
+      action=" /listings/<%= listing.id %>/reviews"
+      method="post"
+      class="needs-validation"
+      novalidate
+    >
+      <div class="mb-3 mt-3">
+        <label for="rating" class="form-label">Rating </label>
+        <fieldset class="starability-slot">
+          <input
+            type="radio"
+            id="no-rate"
+            class="input-no-rate"
+            name="review[rating]"
+            value="1"
+            checked
+            aria-label="No rating."
+          />
+          <input
+            type="radio"
+            id="first-rate1"
+            name="review[rating]"
+            value="1"
+          />
+          <label for="first-rate1" title="Terrible">1 star</label>
+          <input
+            type="radio"
+            id="first-rate2"
+            name="review[rating]"
+            value="2"
+          />
+          <label for="first-rate2" title="Not good">2 stars</label>
+          <input
+            type="radio"
+            id="first-rate3"
+            name="review[rating]"
+            value="3"
+          />
+          <label for="first-rate3" title="Average">3 stars</label>
+          <input
+            type="radio"
+            id="first-rate4"
+            name="review[rating]"
+            value="4"
+          />
+          <label for="first-rate4" title="Very good">4 stars</label>
+          <input
+            type="radio"
+            id="first-rate5"
+            name="review[rating]"
+            value="5"
+          />
+          <label for="first-rate5" title="Amazing">5 stars</label>
+        </fieldset>
+      </div>
+
+      <div class="mb-3 mt-3">
+        <label for="comment" class="form-label">Comments</label>
+        <textarea
+          name="review[comment]"
+          id="comment"
+          cols="30"
+          rows="3"
+          class="form-control"
+          required
+        ></textarea>
+        <!-- client side validation for reviews (required fields, no empty comments) -->
+        <div class="invalid-feedback">enter valid feedback!</div>
+      </div>
+      <br />
+      <button class="btn edit-btn btn-outline-dark">Submit</button>
+    </form>
+    <% } %>
+
+    <% if(listing.reviews.length > 0) { %>
+    <div class="row review-sec">
+      <p><b>All Reviews</b></p>
+      <% for (review of listing.reviews) {%>
+      <div class="card review-card col-sm-5 mb-3 ms-sm-3 ">
+        <div class="card-body mb-3">
+          <h5 class="card-title "><%=review.author.username%></h5>
+          <p
+            class="starability-result card-text"
+            data-rating="<%= review.rating%>"
+          ></p>
+          <p class="card-text"><%= review.comment %></p>
+        </div>
+
+        <% if(currUser && review.author._id.equals(currUser._id)) { %>
+        <form
+          action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+          method="post"
+          class="mb-3 my-3 p-2">
+          <button class="review-btn"> <svg viewBox="0 0 15 17.5" height="17.5" width="15" xmlns="http://www.w3.org/2000/svg" class="icon">
+            <path transform="translate(-2.5 -1.25)" d="M15,18.75H5A1.251,1.251,0,0,1,3.75,17.5V5H2.5V3.75h15V5H16.25V17.5A1.251,1.251,0,0,1,15,18.75ZM5,5V17.5H15V5Zm7.5,10H11.25V7.5H12.5V15ZM8.75,15H7.5V7.5H8.75V15ZM12.5,2.5h-5V1.25h5V2.5Z" id="Fill"></path>
+          </svg>
+        </button>
+      </form>
+      <% } %>
+      </div>
+      <% } %>
+    </div>
+    <% } %>
+  </div>
+
+  <hr>
+
+  <!-- ***** Maps Service***** -->
+  <div class="col-sm-8 offset-sm-2 mb-3">
+    <div class="tittle map-tittle">
+      <h3>Where you'll be </h3>
+      <i class="fa-regular fa-compass fa-spin fa-2xs" style="color: #000000;"></i></i>
+  </div>
+    <div id="map"></div>
+  </div>
+</div>
+
+<script>
+  document.getElementById("reserve-btn").addEventListener("click", function (e) {
+    e.preventDefault();
+
+    // Step 1: Define the booking details, such as amount
+    const pricePerNight = <%= listing.price %>; // from backend
+    const numNights = parseInt(document.getElementById("num-nights").innerText, 10);
+    const amount = pricePerNight * numNights;
+    
+    console.log("The show.ejs amount is " + amount)
+
+    // Step 2: Call the backend to create a Razorpay order
+    fetch("http://localhost:8080/api/createOrder", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ amount: amount })
+    })
+    .then(res => {
+      if (!res.ok) {
+      return res.text().then(text => { throw new Error(text) });
+      }
+      return res.json();
+})
+    .then(data => {
+      // Step 3: Set up Razorpay options
+      const options = {
+        key: "<%= process.env.RAZORPAY_KEY_ID %>", // Use your Razorpay Key ID from environment variables
+        amount: data.amount,
+        currency: "INR",
+        name: "wanderLust",
+        description: "Test Transaction",
+        order_id: data.orderId, // This is the order ID created in the backend
+        handler: function (response) {
+          alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+
+         // Step 4: Call backend endpoint to verify payment
+          fetch("http://localhost:8080/api/verifyPayment", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature
+            })
+          })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              alert("Payment verified successfully!");
+              // Redirect to a success page or display a success message
+            } else {
+              alert("Payment verification failed.");
+            }
+          })
+          .catch(err => console.error("Error verifying payment:", err));
+        },
+        theme: {
+          color: "#F37254"
+        }
+      };
+
+      // Step 5: Open Razorpay payment window
+      const rzp = new Razorpay(options);
+      rzp.on("payment.failed", function (response) {
+        alert("Payment Failed: " + response.error.description);
+      });
+
+      rzp.open();
+    })
+    .catch(err => console.error("Error creating order:", err));
+  });
+</script>
+
+
+<script src="/js/map.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+
+
+
+
+
